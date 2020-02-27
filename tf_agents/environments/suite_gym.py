@@ -24,6 +24,9 @@ from the environment specs and utilize our TimeLimit wrapper.
 """
 import gin
 import gym
+import pybullet_envs
+import carla
+import gym_carla
 
 from tf_agents.environments import gym_wrapper
 from tf_agents.environments import wrappers

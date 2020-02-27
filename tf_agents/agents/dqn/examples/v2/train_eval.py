@@ -77,7 +77,7 @@ FLAGS = flags.FLAGS
 @gin.configurable
 def train_eval(
     root_dir,
-    env_name='CartPole-v0',
+    env_name='CartPoleBulletEnv-v1', #CartPoleBulletEnv-v0',
     num_iterations=100000,
     train_sequence_length=1,
     # Params for QNetwork

@@ -83,7 +83,7 @@ _DEFAULT_REWARD_SCALE = 0
 @gin.configurable
 def train_eval(
     root_dir,
-    env_name='HalfCheetah-v2',
+    env_name='carla-v0',
     eval_env_name=None,
     env_load_fn=suite_mujoco.load,
     num_iterations=1000000,
