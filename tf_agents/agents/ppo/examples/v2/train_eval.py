@@ -82,7 +82,7 @@ FLAGS = flags.FLAGS
 @gin.configurable
 def train_eval(
     root_dir,
-    env_name='HalfCheetah-v2',
+    env_name='carla-v0',
     env_load_fn=suite_mujoco.load,
     random_seed=0,
     # TODO(b/127576522): rename to policy_fc_layers.

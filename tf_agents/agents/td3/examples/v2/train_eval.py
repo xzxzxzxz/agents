@@ -67,7 +67,7 @@ FLAGS = flags.FLAGS
 @gin.configurable
 def train_eval(
     root_dir,
-    env_name='HalfCheetah-v2',
+    env_name='carla-v0',
     num_iterations=2000000,
     actor_fc_layers=(400, 300),
     critic_obs_fc_layers=(400,),
