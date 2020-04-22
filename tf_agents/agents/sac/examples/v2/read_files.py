@@ -93,7 +93,7 @@ def train_eval(
     critic_joint_fc_layers=(256, 256),
     num_parallel_environments=1,
     # Params for collect
-    initial_collect_steps=100,
+    initial_collect_steps=1000,
     collect_steps_per_iteration=1,
     replay_buffer_capacity=1000000,
     # Params for target update
