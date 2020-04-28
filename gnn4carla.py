@@ -1,29 +1,6 @@
-# coding=utf-8
-# Copyright 2018 The TF-Agents Authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-r"""Train and Eval SAC.
-
-To run:
-
-```bash
-tensorboard --logdir $HOME/tmp/sac/gym/HalfCheetah-v2/ --port 2223 &
-
-python tf_agents/agents/sac/examples/v2/train_eval.py \
-  --root_dir=$HOME/tmp/sac/gym/HalfCheetah-v2/ \
-  --alsologtostderr
-```
+"""
+example:
+python gnn4carla.py --root_dir=./sac/carla/ --alsologtostderr
 """
 
 from __future__ import absolute_import
@@ -79,16 +56,16 @@ def normal_projection_net(action_spec,
 
 _DEFAULT_REWARD_SCALE = 0
 
-class Fake_Graph_Preprocessing_Layer(tf.keras.layers.Layer):
+class Graph_Preprocessing_Layer(tf.keras.layers.Layer):
   """Preprocessing layers for multiple source inputs."""
 
   def __init__(self, feature_size, name=None):
-    super(Fake_Graph_Preprocessing_Layer, self).__init__(name=name)
+    super(Graph_Preprocessing_Layer, self).__init__(name=name)
     self.feature_size = feature_size
     self.nn_e2e1 = tf.keras.layers.Dense(64, activation=tf.nn.leaky_relu)
     self.nn_e2e2 = tf.keras.layers.Dense(64, activation=tf.nn.leaky_relu)
     self.nn_e2e3 = tf.keras.layers.Dense(8)
-    self.nn_ve2v1 = tf.keras.layers.Dense(feature_size, activation=tf.nn.leaky_relu)
+    self.nn_ve2v1 = tf.keras.layers.Dense(256, activation=tf.nn.leaky_relu)
     self.nn_ve2v2 = tf.keras.layers.Dense(feature_size)
 
   def __call__(self, inp, training=None):
@@ -105,7 +82,7 @@ class Fake_Graph_Preprocessing_Layer(tf.keras.layers.Layer):
 
   def get_config(self):
     config = {
-      'feature_size':self.feature_size}
+      'feature_size': self.feature_size}
     return config
 
 @gin.configurable
@@ -194,7 +171,7 @@ def train_eval(
     observation_spec = time_step_spec.observation
     action_spec = tf_env.action_spec()
     # Set up preprosessing layers for dictionary observation inputs
-    preprocessing_layers = Fake_Graph_Preprocessing_Layer(256)
+    preprocessing_layers = Graph_Preprocessing_Layer(256)
     actor_net = actor_distribution_network.ActorDistributionNetwork(
         observation_spec,
         action_spec,
